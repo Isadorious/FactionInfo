@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{81388257-882C-4FEE-BEF7-524220C3B2C0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FactionInfo</RootNamespace>
+    <AssemblyName>FactionInfo</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NLog">
+      <HintPath>..\..\..\..\..\Documents\Torch\NLog.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ProtoBuf.Net">
+      <HintPath>..\..\..\..\..\Documents\Torch\DedicatedServer64\ProtoBuf.Net.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sandbox.Common">
+      <HintPath>..\..\..\..\..\Documents\Torch\DedicatedServer64\Sandbox.Common.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sandbox.Game">
+      <HintPath>..\..\..\..\..\Documents\Torch\DedicatedServer64\Sandbox.Game.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sandbox.Graphics">
+      <HintPath>..\..\..\..\..\Documents\Torch\DedicatedServer64\Sandbox.Graphics.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sandbox.RenderDirect">
+      <HintPath>..\..\..\..\..\Documents\Torch\DedicatedServer64\Sandbox.RenderDirect.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SpaceEngineers.Game">
+      <HintPath>..\..\..\..\..\Documents\Torch\DedicatedServer64\SpaceEngineers.Game.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Torch">
+      <HintPath>..\..\..\..\..\Documents\Torch\Torch.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Torch.API">
+      <HintPath>..\..\..\..\..\Documents\Torch\Torch.API.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Torch.Server">
+      <HintPath>..\..\..\..\..\Documents\Torch\Torch.Server.exe</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VRage">
+      <HintPath>..\..\..\..\..\Documents\Torch\DedicatedServer64\VRage.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VRage.Ansel">
+      <HintPath>..\..\..\..\..\Documents\Torch\DedicatedServer64\VRage.Ansel.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VRage.Audio">
+      <HintPath>..\..\..\..\..\Documents\Torch\DedicatedServer64\VRage.Audio.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VRage.Dedicated">
+      <HintPath>..\..\..\..\..\Documents\Torch\DedicatedServer64\VRage.Dedicated.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VRage.Game">
+      <HintPath>..\..\..\..\..\Documents\Torch\DedicatedServer64\VRage.Game.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VRage.Input">
+      <HintPath>..\..\..\..\..\Documents\Torch\DedicatedServer64\VRage.Input.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VRage.Library">
+      <HintPath>..\..\..\..\..\Documents\Torch\DedicatedServer64\VRage.Library.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VRage.Math">
+      <HintPath>..\..\..\..\..\Documents\Torch\DedicatedServer64\VRage.Math.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VRage.Network">
+      <HintPath>..\..\..\..\..\Documents\Torch\DedicatedServer64\VRage.Network.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VRage.Scripting">
+      <HintPath>..\..\..\..\..\Documents\Torch\DedicatedServer64\VRage.Scripting.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VRage.Steam">
+      <HintPath>..\..\..\..\..\Documents\Torch\DedicatedServer64\VRage.Steam.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FactionInfoCommands.cs" />
+    <Compile Include="FactionInfoPlugin.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="manifest.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>
