@@ -44,14 +44,18 @@ namespace FactionInfo
         public void FactionPlayerCount()
         {
             #region Command Arguments
+
             List<string> args = Context.Args;
             uint playerCount = 0;
+            string factionTag = "";
             bool getPublicInfo = false;
             bool getPrivateInfo = false;
             bool getFounder = false;
             bool getLeaders = false;
             bool getMembers = false;
             bool incNPCs = false;
+            bool getSpecificFaction = false;
+
             foreach (string arg in args)
             {
                 if (arg.StartsWith("-count>"))
@@ -77,12 +81,21 @@ namespace FactionInfo
                     getMembers = true;
                 else if (arg.Equals("-NPC"))
                     incNPCs = true;
+                else if (arg.StartsWith("-tag="))
+                {
+                    getSpecificFaction = true;
+
+                    string[] splitArray = arg.Split('=');
+
+                    factionTag = splitArray[1];
+
+                }
             }
 
             #endregion
 
             var sb = new StringBuilder();
-            
+
             #region Feedback Applied Filter Options
 
             var appliedFiltersOutput = "Filters applied: ";
@@ -108,6 +121,9 @@ namespace FactionInfo
             if (incNPCs)
                 appliedFiltersOutput += "Include NPCs";
 
+            if (getSpecificFaction)
+                appliedFiltersOutput += "Searching for faction with tag: " + factionTag + " ignoring count arg";
+
             sb.AppendLine(appliedFiltersOutput);
 
             #endregion
@@ -118,70 +134,123 @@ namespace FactionInfo
                 sb.AppendLine();
             }
 
-
-            foreach (var factionId in MySession.Static.Factions)
+            if (getSpecificFaction == true)
             {
-                var faction = factionId.Value;
-                double memberCount = faction.Members.Count;
+                var faction = MySession.Static.Factions.TryGetFactionByTag(factionTag);
 
-                if (!incNPCs)
+                sb.AppendLine(faction.Tag + " - " + faction.Name + " - " + faction.Members.Count);
+
+
+                if (getPublicInfo)
                 {
-                    if (faction.IsEveryoneNpc())
-                    {
-                        continue;
-                    }
+                    sb.AppendLine("Public Info:: " + faction.Description);
                 }
 
-                if (memberCount > playerCount)
+                if (getPrivateInfo)
                 {
-                    sb.AppendLine(faction.Tag + " - " + faction.Name + " - " + memberCount);
+                    sb.AppendLine("Private Info:: " + faction.PrivateInfo);
+                }
 
-
-                    if (getPublicInfo)
+                if (getFounder || getLeaders || getMembers)
+                {
+                    foreach (var player in faction?.Members)
                     {
-                        sb.AppendLine("Public Info:: " + faction.Description);
-                    }
+                        if (!MySession.Static.Players.HasIdentity(player.Key) &&
+                            !MySession.Static.Players.IdentityIsNpc(player.Key) ||
+                            string.IsNullOrEmpty(MySession.Static?.Players
+                                ?.TryGetIdentity(player.Value.PlayerId)
+                                .DisplayName)) continue; //This is needed to filter out players with no id.
 
-                    if (getPrivateInfo)
-                    {
-                        sb.AppendLine("Private Info:: " + faction.PrivateInfo);
-                    }
-
-                    if (getFounder || getLeaders || getMembers)
-                    {
-                        foreach (var player in faction?.Members)
+                        if (player.Value.IsFounder) // Always true Founder is a leader & a member
                         {
-                            if (!MySession.Static.Players.HasIdentity(player.Key) &&
-                                !MySession.Static.Players.IdentityIsNpc(player.Key) ||
-                                string.IsNullOrEmpty(MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId)
-                                    .DisplayName)) continue; //This is needed to filter out players with no id.
+                            sb.AppendLine("Founder:: " + MySession.Static?.Players
+                                              ?.TryGetIdentity(player.Value.PlayerId).DisplayName);
+                        }
 
-                            if (player.Value.IsFounder) // Always true Founder is a leader & a member
-                            {
-                                sb.AppendLine("Founder:: " + MySession.Static?.Players
-                                                  ?.TryGetIdentity(player.Value.PlayerId).DisplayName);
-                            }
+                        else if (player.Value.IsLeader && (getLeaders || getMembers))
+                        {
+                            sb.AppendLine("Leader:: " + MySession.Static?.Players
+                                              ?.TryGetIdentity(player.Value.PlayerId).DisplayName);
+                        }
 
-                            else if (player.Value.IsLeader && (getLeaders || getMembers))
-                            {
-                                sb.AppendLine("Leader:: " + MySession.Static?.Players
-                                                  ?.TryGetIdentity(player.Value.PlayerId).DisplayName);
-                            }
+                        else if (getMembers)
+                        {
+                            sb.AppendLine("Members:: " + MySession.Static?.Players
+                                              ?.TryGetIdentity(player.Value.PlayerId).DisplayName);
+                        }
 
-                            else if (getMembers)
-                            {
-                                sb.AppendLine("Members:: " + MySession.Static?.Players
-                                                  ?.TryGetIdentity(player.Value.PlayerId).DisplayName);
-                            }
+                    }
+                }
+            }
+            else
+            {
 
+                foreach (var factionId in MySession.Static.Factions)
+                {
+
+                    var faction = factionId.Value;
+                    double memberCount = faction.Members.Count;
+
+                    if (!incNPCs)
+                    {
+                        if (faction.IsEveryoneNpc())
+                        {
+                            continue;
                         }
                     }
 
-                    // Checks that a switch has been activated so that an empty line gets put in
-                    if (getFounder || getLeaders || getMembers || getPrivateInfo || getPublicInfo ||
-                        memberCount > playerCount)
+                    if (memberCount > playerCount)
                     {
-                        sb.AppendLine();
+                        sb.AppendLine(faction.Tag + " - " + faction.Name + " - " + memberCount);
+
+
+                        if (getPublicInfo)
+                        {
+                            sb.AppendLine("Public Info:: " + faction.Description);
+                        }
+
+                        if (getPrivateInfo)
+                        {
+                            sb.AppendLine("Private Info:: " + faction.PrivateInfo);
+                        }
+
+                        if (getFounder || getLeaders || getMembers)
+                        {
+                            foreach (var player in faction?.Members)
+                            {
+                                if (!MySession.Static.Players.HasIdentity(player.Key) &&
+                                    !MySession.Static.Players.IdentityIsNpc(player.Key) ||
+                                    string.IsNullOrEmpty(MySession.Static?.Players
+                                        ?.TryGetIdentity(player.Value.PlayerId)
+                                        .DisplayName)) continue; //This is needed to filter out players with no id.
+
+                                if (player.Value.IsFounder) // Always true Founder is a leader & a member
+                                {
+                                    sb.AppendLine("Founder:: " + MySession.Static?.Players
+                                                      ?.TryGetIdentity(player.Value.PlayerId).DisplayName);
+                                }
+
+                                else if (player.Value.IsLeader && (getLeaders || getMembers))
+                                {
+                                    sb.AppendLine("Leader:: " + MySession.Static?.Players
+                                                      ?.TryGetIdentity(player.Value.PlayerId).DisplayName);
+                                }
+
+                                else if (getMembers)
+                                {
+                                    sb.AppendLine("Members:: " + MySession.Static?.Players
+                                                      ?.TryGetIdentity(player.Value.PlayerId).DisplayName);
+                                }
+
+                            }
+                        }
+
+                        // Checks that a switch has been activated so that an empty line gets put in
+                        if (getFounder || getLeaders || getMembers || getPrivateInfo || getPublicInfo ||
+                            memberCount > playerCount)
+                        {
+                            sb.AppendLine();
+                        }
                     }
                 }
             }
