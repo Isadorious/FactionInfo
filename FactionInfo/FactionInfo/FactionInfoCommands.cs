@@ -153,6 +153,8 @@ namespace FactionInfo
 
                 if (getFounder || getLeaders || getMembers)
                 {
+                    var now = new DateTime();
+
                     foreach (var player in faction?.Members)
                     {
                         if (!MySession.Static.Players.HasIdentity(player.Key) &&
@@ -165,18 +167,23 @@ namespace FactionInfo
                         {
                             sb.AppendLine("Founder:: " + MySession.Static?.Players
                                               ?.TryGetIdentity(player.Value.PlayerId).DisplayName);
+
+                            sb.AppendLine("   Last logout: " + (now - MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).LastLogoutTime));
+
                         }
 
                         else if (player.Value.IsLeader && (getLeaders || getMembers))
                         {
                             sb.AppendLine("Leader:: " + MySession.Static?.Players
                                               ?.TryGetIdentity(player.Value.PlayerId).DisplayName);
+                            sb.AppendLine("   Last logout: " + (now - MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).LastLogoutTime));
                         }
 
                         else if (getMembers)
                         {
                             sb.AppendLine("Members:: " + MySession.Static?.Players
                                               ?.TryGetIdentity(player.Value.PlayerId).DisplayName);
+                            sb.AppendLine("   Last logout: " + (now - MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).LastLogoutTime));
                         }
 
                     }
@@ -216,6 +223,7 @@ namespace FactionInfo
 
                         if (getFounder || getLeaders || getMembers)
                         {
+                            var now = new DateTime();
                             foreach (var player in faction?.Members)
                             {
                                 if (!MySession.Static.Players.HasIdentity(player.Key) &&
@@ -228,18 +236,21 @@ namespace FactionInfo
                                 {
                                     sb.AppendLine("Founder:: " + MySession.Static?.Players
                                                       ?.TryGetIdentity(player.Value.PlayerId).DisplayName);
+                                    sb.AppendLine("   Last logout: " + (now - MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).LastLogoutTime));
                                 }
 
                                 else if (player.Value.IsLeader && (getLeaders || getMembers))
                                 {
                                     sb.AppendLine("Leader:: " + MySession.Static?.Players
                                                       ?.TryGetIdentity(player.Value.PlayerId).DisplayName);
+                                    sb.AppendLine("   Last logout: " + (now - MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).LastLogoutTime));
                                 }
 
                                 else if (getMembers)
                                 {
                                     sb.AppendLine("Members:: " + MySession.Static?.Players
                                                       ?.TryGetIdentity(player.Value.PlayerId).DisplayName);
+                                    sb.AppendLine("   Last logout: " + (now - MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).LastLogoutTime));
                                 }
 
                             }
