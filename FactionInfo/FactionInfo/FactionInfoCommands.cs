@@ -164,7 +164,7 @@ namespace FactionInfo
 
                 if (getFounder || getLeaders || getMembers)
                 {
-                    var now = new DateTime();
+                    var now = DateTime.Now;
 
                     foreach (var player in faction?.Members)
                     {
@@ -248,7 +248,7 @@ namespace FactionInfo
 
                         if (getFounder || getLeaders || getMembers)
                         {
-                            var now = new DateTime();
+                            var now = DateTime.Now;
                             foreach (var player in faction?.Members)
                             {
                                 if (!MySession.Static.Players.HasIdentity(player.Key) &&
