@@ -182,7 +182,7 @@ namespace FactionInfo
                             TimeSpan? difference = now - MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).LastLogoutTime;
 
                             if(difference.HasValue)
-                                sb.AppendLine("   Last logout: " + difference.Value.Days);
+                                sb.AppendLine("   Last logout: " + difference.Value.Days + " days");
 
                         }
 
@@ -193,7 +193,7 @@ namespace FactionInfo
                             TimeSpan? difference = now - MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).LastLogoutTime;
 
                             if (difference.HasValue)
-                                sb.AppendLine("   Last logout: " + difference.Value.Days);
+                                sb.AppendLine("   Last logout: " + difference.Value.Days + " days");
                         }
 
                         else if (getMembers)
@@ -203,7 +203,7 @@ namespace FactionInfo
                             TimeSpan? difference = now - MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).LastLogoutTime;
 
                             if (difference.HasValue)
-                                sb.AppendLine("   Last logout: " + difference.Value.Days);
+                                sb.AppendLine("   Last logout: " + difference.Value.Days + " days");
                         }
 
                     }
@@ -264,7 +264,7 @@ namespace FactionInfo
                                     TimeSpan? difference = now - MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).LastLogoutTime;
 
                                     if (difference.HasValue)
-                                        sb.AppendLine("   Last logout: " + difference.Value.Days);
+                                        sb.AppendLine("   Last logout: " + difference.Value.Days + " days");
                                 }
 
                                 else if (player.Value.IsLeader && (getLeaders || getMembers))
@@ -274,7 +274,7 @@ namespace FactionInfo
                                     TimeSpan? difference = now - MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).LastLogoutTime;
 
                                     if (difference.HasValue)
-                                        sb.AppendLine("   Last logout: " + difference.Value.Days);
+                                        sb.AppendLine("   Last logout: " + difference.Value.Days + " days");
                                 }
 
                                 else if (getMembers)
@@ -284,7 +284,7 @@ namespace FactionInfo
                                     TimeSpan? difference = now - MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).LastLogoutTime;
 
                                     if (difference.HasValue)
-                                        sb.AppendLine("   Last logout: " + difference.Value.Days);
+                                        sb.AppendLine("   Last logout: " + difference.Value.Days + " days");
                                 }
 
                             }
