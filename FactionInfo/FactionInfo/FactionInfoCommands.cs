@@ -55,6 +55,7 @@ namespace FactionInfo
             bool getMembers = false;
             bool incNPCs = false;
             bool getSpecificFaction = false;
+            bool acceptAll = false;
 
             foreach (string arg in args)
             {
@@ -81,6 +82,8 @@ namespace FactionInfo
                     getMembers = true;
                 else if (arg.Equals("-NPC"))
                     incNPCs = true;
+                else if (arg.Equals("-AcceptAll"))
+                    acceptAll = true;
                 else if (arg.StartsWith("-tag="))
                 {
                     getSpecificFaction = true;
@@ -109,6 +112,9 @@ namespace FactionInfo
             if (getPrivateInfo)
                 appliedFiltersOutput += "Private Info, ";
 
+            if (acceptAll)
+                appliedFiltersOutput += "Accept All, ";
+
             if (getFounder)
                 appliedFiltersOutput += "Get Founder, ";
 
@@ -123,6 +129,7 @@ namespace FactionInfo
 
             if (getSpecificFaction)
                 appliedFiltersOutput += "Searching for faction with tag: " + factionTag + " ignoring count arg";
+
 
             sb.AppendLine(appliedFiltersOutput);
 
@@ -140,7 +147,6 @@ namespace FactionInfo
 
                 sb.AppendLine(faction.Tag + " - " + faction.Name + " - " + faction.Members.Count);
 
-
                 if (getPublicInfo)
                 {
                     sb.AppendLine("Public Info:: " + faction.Description);
@@ -149,6 +155,11 @@ namespace FactionInfo
                 if (getPrivateInfo)
                 {
                     sb.AppendLine("Private Info:: " + faction.PrivateInfo);
+                }
+
+                if (acceptAll)
+                {
+                    sb.AppendLine("Accept All:: " + faction.AutoAcceptMember);
                 }
 
                 if (getFounder || getLeaders || getMembers)
@@ -168,7 +179,10 @@ namespace FactionInfo
                             sb.AppendLine("Founder:: " + MySession.Static?.Players
                                               ?.TryGetIdentity(player.Value.PlayerId).DisplayName);
 
-                            sb.AppendLine("   Last logout: " + (now - MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).LastLogoutTime));
+                            TimeSpan? difference = now - MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).LastLogoutTime;
+
+                            if(difference.HasValue)
+                                sb.AppendLine("   Last logout: " + difference.Value.Days);
 
                         }
 
@@ -176,14 +190,20 @@ namespace FactionInfo
                         {
                             sb.AppendLine("Leader:: " + MySession.Static?.Players
                                               ?.TryGetIdentity(player.Value.PlayerId).DisplayName);
-                            sb.AppendLine("   Last logout: " + (now - MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).LastLogoutTime));
+                            TimeSpan? difference = now - MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).LastLogoutTime;
+
+                            if (difference.HasValue)
+                                sb.AppendLine("   Last logout: " + difference.Value.Days);
                         }
 
                         else if (getMembers)
                         {
                             sb.AppendLine("Members:: " + MySession.Static?.Players
                                               ?.TryGetIdentity(player.Value.PlayerId).DisplayName);
-                            sb.AppendLine("   Last logout: " + (now - MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).LastLogoutTime));
+                            TimeSpan? difference = now - MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).LastLogoutTime;
+
+                            if (difference.HasValue)
+                                sb.AppendLine("   Last logout: " + difference.Value.Days);
                         }
 
                     }
@@ -221,6 +241,11 @@ namespace FactionInfo
                             sb.AppendLine("Private Info:: " + faction.PrivateInfo);
                         }
 
+                        if (acceptAll)
+                        {
+                            sb.AppendLine("Accept All:: " + faction.AutoAcceptMember);
+                        }
+
                         if (getFounder || getLeaders || getMembers)
                         {
                             var now = new DateTime();
@@ -236,21 +261,30 @@ namespace FactionInfo
                                 {
                                     sb.AppendLine("Founder:: " + MySession.Static?.Players
                                                       ?.TryGetIdentity(player.Value.PlayerId).DisplayName);
-                                    sb.AppendLine("   Last logout: " + (now - MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).LastLogoutTime));
+                                    TimeSpan? difference = now - MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).LastLogoutTime;
+
+                                    if (difference.HasValue)
+                                        sb.AppendLine("   Last logout: " + difference.Value.Days);
                                 }
 
                                 else if (player.Value.IsLeader && (getLeaders || getMembers))
                                 {
                                     sb.AppendLine("Leader:: " + MySession.Static?.Players
                                                       ?.TryGetIdentity(player.Value.PlayerId).DisplayName);
-                                    sb.AppendLine("   Last logout: " + (now - MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).LastLogoutTime));
+                                    TimeSpan? difference = now - MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).LastLogoutTime;
+
+                                    if (difference.HasValue)
+                                        sb.AppendLine("   Last logout: " + difference.Value.Days);
                                 }
 
                                 else if (getMembers)
                                 {
                                     sb.AppendLine("Members:: " + MySession.Static?.Players
                                                       ?.TryGetIdentity(player.Value.PlayerId).DisplayName);
-                                    sb.AppendLine("   Last logout: " + (now - MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).LastLogoutTime));
+                                    TimeSpan? difference = now - MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).LastLogoutTime;
+
+                                    if (difference.HasValue)
+                                        sb.AppendLine("   Last logout: " + difference.Value.Days);
                                 }
 
                             }
