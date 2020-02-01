@@ -48,6 +48,7 @@ namespace FactionInfo
             List<string> args = Context.Args;
             uint playerCount = 0;
             string factionTag = "";
+            string specificPlayer = "";
             bool getPublicInfo = false;
             bool getPrivateInfo = false;
             bool getFounder = false;
@@ -56,6 +57,7 @@ namespace FactionInfo
             bool incNPCs = false;
             bool getSpecificFaction = false;
             bool acceptAll = false;
+            bool getSpecificPlayer = false;
 
             foreach (string arg in args)
             {
@@ -92,6 +94,14 @@ namespace FactionInfo
 
                     factionTag = splitArray[1];
 
+                }
+                else if (arg.StartsWith("-player="))
+                {
+                    getSpecificPlayer = true;
+
+                    string[] splitArray = arg.Split('=');
+
+                    specificPlayer = splitArray[1];
                 }
             }
 
@@ -136,7 +146,7 @@ namespace FactionInfo
             #endregion
 
             // Checks that a switch has been activated so that an empty line gets put in
-            if (getFounder || getLeaders || getMembers || getPrivateInfo || getPublicInfo || playerCount > 0)
+            if (getFounder || getLeaders || getMembers || getPrivateInfo || getPublicInfo || playerCount > 0 || getSpecificFaction || getSpecificPlayer)
             {
                 sb.AppendLine();
             }
@@ -191,6 +201,79 @@ namespace FactionInfo
                             sb.AppendLine("Leader:: " + MySession.Static?.Players
                                               ?.TryGetIdentity(player.Value.PlayerId).DisplayName);
                             TimeSpan? difference = now - MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).LastLogoutTime;
+
+
+                            if (difference.HasValue)
+                                sb.AppendLine("   Last logout: " + difference.Value.Days + " days");
+                        }
+
+                        else if (getMembers)
+                        {
+                            sb.AppendLine("Members:: " + MySession.Static?.Players
+                                              ?.TryGetIdentity(player.Value.PlayerId).DisplayName);
+                            TimeSpan? difference = now - MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).LastLogoutTime;
+
+                            if (difference.HasValue)
+                                sb.AppendLine("   Last logout: " + difference.Value.Days + " days");
+                        }
+
+                    }
+                }
+            }
+            else if (getSpecificPlayer == true)
+            {
+
+                var targetPlayer = GetPlayerByNameOrId(specificPlayer);
+
+                var faction = MySession.Static.Factions.TryGetPlayerFaction(targetPlayer.IdentityId);
+
+                sb.AppendLine(faction.Tag + " - " + faction.Name + " - " + faction.Members.Count);
+
+                if (getPublicInfo)
+                {
+                    sb.AppendLine("Public Info:: " + faction.Description);
+                }
+
+                if (getPrivateInfo)
+                {
+                    sb.AppendLine("Private Info:: " + faction.PrivateInfo);
+                }
+
+                if (acceptAll)
+                {
+                    sb.AppendLine("Accept All:: " + faction.AutoAcceptMember);
+                }
+
+                if (getFounder || getLeaders || getMembers)
+                {
+                    var now = DateTime.Now;
+
+                    foreach (var player in faction?.Members)
+                    {
+                        if (!MySession.Static.Players.HasIdentity(player.Key) &&
+                            !MySession.Static.Players.IdentityIsNpc(player.Key) ||
+                            string.IsNullOrEmpty(MySession.Static?.Players
+                                ?.TryGetIdentity(player.Value.PlayerId)
+                                .DisplayName)) continue; //This is needed to filter out players with no id.
+
+                        if (player.Value.IsFounder) // Always true Founder is a leader & a member
+                        {
+                            sb.AppendLine("Founder:: " + MySession.Static?.Players
+                                              ?.TryGetIdentity(player.Value.PlayerId).DisplayName);
+
+                            TimeSpan? difference = now - MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).LastLogoutTime;
+
+                            if (difference.HasValue)
+                                sb.AppendLine("   Last logout: " + difference.Value.Days + " days");
+
+                        }
+
+                        else if (player.Value.IsLeader && (getLeaders || getMembers))
+                        {
+                            sb.AppendLine("Leader:: " + MySession.Static?.Players
+                                              ?.TryGetIdentity(player.Value.PlayerId).DisplayName);
+                            TimeSpan? difference = now - MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).LastLogoutTime;
+
 
                             if (difference.HasValue)
                                 sb.AppendLine("   Last logout: " + difference.Value.Days + " days");
