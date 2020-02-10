@@ -392,5 +392,13 @@ namespace FactionInfo
                 ModCommunication.SendMessageTo(new DialogMessage("Faction Info", null, sb.ToString()), Context.Player.SteamUserId);
             }
         }
+
+        [Command("faction private", "Replaces a factions private info with a message to not break the rules.")]
+        public void ResetFactionPrivateInfo(string tag)
+        {
+            var faction = MySession.Static.Factions.TryGetFactionByTag(tag);
+
+            faction.PrivateInfo = "Please do not put anything in your private info that is against the rules";
+        }
     }
 }
