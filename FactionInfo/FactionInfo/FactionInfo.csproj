@@ -30,33 +30,53 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="NLog">
-      <HintPath>..\..\..\..\..\Documents\Torch\NLog.dll</HintPath>
+      <HintPath>..\TorchBinaries\NLog.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="ProtoBuf.Net">
-      <HintPath>..\..\..\..\..\Documents\Torch\DedicatedServer64\ProtoBuf.Net.dll</HintPath>
+      <HintPath>..\GameBinaries\ProtoBuf.Net.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Sandbox.Common">
-      <HintPath>..\..\..\..\..\Documents\Torch\DedicatedServer64\Sandbox.Common.dll</HintPath>
+      <HintPath>..\GameBinaries\Sandbox.Common.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Sandbox.Game">
-      <HintPath>..\..\..\..\..\Documents\Torch\DedicatedServer64\Sandbox.Game.dll</HintPath>
+      <HintPath>..\GameBinaries\Sandbox.Game.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Sandbox.Graphics">
-      <HintPath>..\..\..\..\..\Documents\Torch\DedicatedServer64\Sandbox.Graphics.dll</HintPath>
+      <HintPath>..\GameBinaries\Sandbox.Graphics.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Sandbox.RenderDirect">
-      <HintPath>..\..\..\..\..\Documents\Torch\DedicatedServer64\Sandbox.RenderDirect.dll</HintPath>
+      <HintPath>..\GameBinaries\Sandbox.RenderDirect.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="SpaceEngineers.Game">
-      <HintPath>..\..\..\..\..\Documents\Torch\DedicatedServer64\SpaceEngineers.Game.dll</HintPath>
+      <HintPath>..\GameBinaries\SpaceEngineers.Game.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -68,59 +88,59 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="Torch">
-      <HintPath>..\..\..\..\..\Documents\Torch\Torch.dll</HintPath>
+      <HintPath>..\TorchBinaries\Torch.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Torch.API">
-      <HintPath>..\..\..\..\..\Documents\Torch\Torch.API.dll</HintPath>
+      <HintPath>..\TorchBinaries\Torch.API.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Torch.Server">
-      <HintPath>..\..\..\..\..\Documents\Torch\Torch.Server.exe</HintPath>
+      <HintPath>..\TorchBinaries\Torch.Server.exe</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VRage">
-      <HintPath>..\..\..\..\..\Documents\Torch\DedicatedServer64\VRage.dll</HintPath>
+      <HintPath>..\GameBinaries\VRage.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VRage.Ansel">
-      <HintPath>..\..\..\..\..\Documents\Torch\DedicatedServer64\VRage.Ansel.dll</HintPath>
+      <HintPath>..\GameBinaries\VRage.Ansel.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VRage.Audio">
-      <HintPath>..\..\..\..\..\Documents\Torch\DedicatedServer64\VRage.Audio.dll</HintPath>
+      <HintPath>..\GameBinaries\VRage.Audio.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VRage.Dedicated">
-      <HintPath>..\..\..\..\..\Documents\Torch\DedicatedServer64\VRage.Dedicated.dll</HintPath>
+      <HintPath>..\GameBinaries\VRage.Dedicated.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VRage.Game">
-      <HintPath>..\..\..\..\..\Documents\Torch\DedicatedServer64\VRage.Game.dll</HintPath>
+      <HintPath>..\GameBinaries\VRage.Game.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VRage.Input">
-      <HintPath>..\..\..\..\..\Documents\Torch\DedicatedServer64\VRage.Input.dll</HintPath>
+      <HintPath>..\GameBinaries\VRage.Input.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VRage.Library">
-      <HintPath>..\..\..\..\..\Documents\Torch\DedicatedServer64\VRage.Library.dll</HintPath>
+      <HintPath>..\GameBinaries\VRage.Library.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VRage.Math">
-      <HintPath>..\..\..\..\..\Documents\Torch\DedicatedServer64\VRage.Math.dll</HintPath>
+      <HintPath>..\GameBinaries\VRage.Math.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VRage.Network">
-      <HintPath>..\..\..\..\..\Documents\Torch\DedicatedServer64\VRage.Network.dll</HintPath>
+      <HintPath>..\GameBinaries\VRage.Network.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VRage.Scripting">
-      <HintPath>..\..\..\..\..\Documents\Torch\DedicatedServer64\VRage.Scripting.dll</HintPath>
+      <HintPath>..\GameBinaries\VRage.Scripting.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VRage.Steam">
-      <HintPath>..\..\..\..\..\Documents\Torch\DedicatedServer64\VRage.Steam.dll</HintPath>
+      <HintPath>..\GameBinaries\VRage.Steam.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -136,7 +156,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>powershell.exe -ExecutionPolicy Bypass -NoProfile -NonInteractive -File $(SolutionDir)build.ps1 -SolutionDir $(SolutionDir)</PostBuildEvent>
   </PropertyGroup>
 </Project>
