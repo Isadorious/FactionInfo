@@ -1,1 +1,2 @@
-copy-item -path "E:\Files\OneDrive\repos\FactionInfo\FactionInfo\bin\Debug\*" -Destination "E:\Files\Documents\Torch\Plugins\FactionInfo" -force
+New-Item -ItemType Directory -Force -Path ".\TorchBinaries\Plugins\FactionInfo"
+copy-item -path ".\FactionInfo\bin\Debug\*" -Destination ".\TorchBinaries\Plugins\FactionInfo" -Force
