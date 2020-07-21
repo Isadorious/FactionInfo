@@ -148,6 +148,7 @@
     <Compile Include="FactionInfoCommands.cs" />
     <Compile Include="FactionInfoPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="manifest.xml">
