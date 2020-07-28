@@ -153,19 +153,19 @@ namespace FactionInfo
                         if (!MySession.Static.Players.HasIdentity(player.Key) && !MySession.Static.Players.IdentityIsNpc(player.Key) || string.IsNullOrEmpty(MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).DisplayName)) continue; //This is needed to filter out players with no id.
                         if (player.Value.IsFounder == true)
                         { // Always true Founder is a leader & a member
-                            sb.AppendLine("Founder: " + MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).DisplayName);
+                            sb.AppendLine("Founder: " + MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).DisplayName +" ("+MySession.Static?.Players.TryGetSteamId(player.Value.PlayerId)+")");
                             TimeSpan? difference = now - MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).LastLogoutTime;
                             if (difference.HasValue) sb.AppendLine($"   Last logout: {(difference.Value.Days > 0 ? difference.Value.Days + " days " : "")} {(difference.Value.Hours > 0 ? difference.Value.Hours + " hours" : "")} {(difference.Value.Minutes > 0 ? difference.Value.Minutes + " minutes" : "")}");
                         }
                         else if (player.Value.IsLeader == true && (getLeaders == true|| getMembers == true))
                         {
-                            sb.AppendLine("Leader: " + MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).DisplayName);
+                            sb.AppendLine("Leader: " + MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).DisplayName + " (" + MySession.Static?.Players.TryGetSteamId(player.Value.PlayerId) + ")");
                             TimeSpan? difference = now - MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).LastLogoutTime;
                             if (difference.HasValue) sb.AppendLine($"   Last logout: {(difference.Value.Days > 0 ? difference.Value.Days + " days " : "")} {(difference.Value.Hours > 0 ? difference.Value.Hours + " hours" : "")} {(difference.Value.Minutes > 0 ? difference.Value.Minutes + " minutes" : "")}");
                         }
                         else if (getMembers == true)
                         {
-                            sb.AppendLine("Members: " + MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).DisplayName);
+                            sb.AppendLine("Members: " + MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).DisplayName + " (" + MySession.Static?.Players.TryGetSteamId(player.Value.PlayerId) + ")");
                             TimeSpan? difference = now - MySession.Static?.Players?.TryGetIdentity(player.Value.PlayerId).LastLogoutTime;
                             if (difference.HasValue) sb.AppendLine($"   Last logout: {(difference.Value.Days > 0 ? difference.Value.Days + " days " : "")} {(difference.Value.Hours > 0 ? difference.Value.Hours + " hours" : "")} {(difference.Value.Minutes > 0 ? difference.Value.Minutes + " minutes" : "")}");
                         }
